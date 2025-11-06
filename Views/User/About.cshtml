@@ -1,0 +1,245 @@
+﻿@{
+    ViewData["Title"] = "About Us - MINSU E-ProHub";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Learn about MINSU E-ProHub - Your trusted online reservation system for production office equipment" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/home.css" />
+    <link rel="stylesheet" href="~/css/about.css?v=" />
+    <link rel="icon" href="~/images/logominsu.png" type="image/png" />
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand d-flex align-items-center" href="@Url.Action("homepage", "User")">
+                <img src="~/images/logominsu.png" alt="MINSU Logo" class="navbar-logo">
+                <span class="brand-text">MINSU E-ProHub</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("homepage", "User")" data-page="homepage">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="@Url.Action("About", "User")" data-page="about">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Product", "User")" data-page="product">Product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Contact", "User")" data-page="contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Profile", "User")" data-page="profile">Profile</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8 mx-auto text-center">
+                    <div class="header-badge fade-in">📖 About Us</div>
+                    <h1 class="page-title fade-in-delay-1">Empowering Creative Excellence</h1>
+                    <p class="page-subtitle fade-in-delay-2">
+                        Discover how MINSU E-ProHub is revolutionizing equipment reservation and production management for the academic community
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="decoration-circle circle-1"></div>
+        <div class="decoration-circle circle-2"></div>
+    </section>
+
+    <!-- VMGO Section -->
+    <section class="vmgo-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <div class="section-badge">🎯 VMGO</div>
+                <h2 class="section-title">Vision, Mission, Goals & Objectives</h2>
+                <p class="section-subtitle">
+                    The foundation of E-ProHub's commitment to excellence
+                </p>
+            </div>
+
+            <!-- Vision -->
+            <div class="row mb-5 fade-in-up">
+                <div class="col-12">
+                    <div class="vmgo-card vision-card">
+                        <div class="vmgo-header">
+                            <div class="vmgo-icon">🌟</div>
+                            <h2 class="vmgo-title">Vision</h2>
+                        </div>
+                        <div class="vmgo-content">
+                            <p class="vmgo-text">
+                               The MinSU Production Unit envinsions itself as a model of university-based enterprise in the region, recognized for excellence in sustainable production, innovation and enterpreneurship. It seeks to be a dynamic contributor to Mindoro's socio-economic development by transforming academic knowledge into high quality products and services, empowering students and communities, and promoting self-reliance and institutional growth.'
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mission -->
+            <div class="row mb-5 fade-in-up">
+                <div class="col-12">
+                    <div class="vmgo-card mission-card">
+                        <div class="vmgo-header">
+                            <div class="vmgo-icon">🎯</div>
+                            <h2 class="vmgo-title">Mission</h2>
+                        </div>
+                        <div class="vmgo-content">
+                            <p class="vmgo-text">
+                                The MinSU Production Unit is committed to support the university's mandate by developing and managing sustainable and innovative income generating enterprises that integrate academic learning, research, and community engagement. Produce quality goods and services that enhance student training, promote entrepreneurship, and contribute to the financial sustainability of the institution, while fostering inclusive growth and development in the surrounding communities.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Goals -->
+            <div class="row mb-5 fade-in-up">
+                <div class="col-12">
+                    <div class="vmgo-card goals-card">
+                        <div class="vmgo-header">
+                            <div class="vmgo-icon">🎖️</div>
+                            <h2 class="vmgo-title">Goals</h2>
+                        </div>
+                        <div class="vmgo-content">
+                            <p class="vmgo-text">
+                                The goal of MinSU Production Unit is to support the university's academic, research and extension functions by engaging in sustainable Income Generating Projects. The unit aims to produce high quality goods and services that promote innovation, provide practical learning experiences for students, enhance institutional self-sufficiency and contribute to local economic development. Through efficient management and strategic partnership, the Production Unit Strives to become a model for entrepreneurship, productivity and community engagement within and beyond the university.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                      
+            <!-- Objectives -->
+            <div class="row fade-in-up">
+                <div class="col-12">
+                    <div class="vmgo-card objectives-card">
+                        <div class="vmgo-header">
+                            <div class="vmgo-icon">📋</div>
+                            <h2 class="vmgo-title">Objectives</h2>
+                        </div>
+                        <div class="vmgo-content">
+                            <ul class="objectives-list">
+                                <li class="objective-item">
+                                    <div class="objective-icon">✓</div>
+                                    <div class="objective-text">The MinSU Production Unit aims to achieve the following objectives: </div>
+                                </li>
+                                <li class="objective-item">
+                                    <div class="objective-icon">✓</div>
+                                    <div class="objective-text">Support Instructions and Training by providing hands-on learning opportunities for students through active participation in production-related activities aligned with their academic programs.</div>
+                                </li>
+                                <li class="objective-item">
+                                    <div class="objective-icon">✓</div>
+                                    <div class="objective-text">Generate Institutional Income by establishing and managing sustainable income generating projects to contribute to the financial stability and development of MinSU.</div>
+                                </li>
+                                <li class="objective-item">
+                                    <div class="objective-icon">✓</div>
+                                    <div class="objective-text">Promote Research Based Production by utilizing research outputs and innovations from the university to develop high quality marketable products and services.</div>
+                                </li>
+                                <li class="objective-item">
+                                    <div class="objective-icon">✓</div>
+                                    <div class="objective-text">Enhance Community Engagement by extending production knowledge, skills and technologies to partner communities, promoting local entrepreneurship and livelihood development.</div>
+                                </li>
+                                <li class="objective-item">
+                                    <div class="objective-icon">✓</div>
+                                    <div class="objective-text">Ensure Quality and Sustainability by maintaining high standards of quality, efficiency and environmental resposibility in all production activities.</div>
+                                </li>
+                                <li class="objective-item">
+                                    <div class="objective-icon">✓</div>
+                                    <div class="objective-text">Foster Strategic Partnership by building collaboration with government agencies, private sector and other stakeholders to expand market reach and improve production processes.</div>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+   
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <div class="section-badge">👥 Our Team</div>
+                <h2 class="section-title">Meet the People Behind E-ProHub</h2>
+                <p class="section-subtitle">
+                    Dedicated professionals committed to your success
+                </p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6 fade-in-up">
+                    <div class="team-card">
+                        <div class="team-avatar">
+                            <div class="avatar-placeholder">👨‍💼</div>
+                        </div>
+                        <h3 class="team-name">Dr. Ricardo Mendoza</h3>
+                        <p class="team-role">Production Office Director</p>
+                        <p class="team-bio">Leading the digital transformation of production resource management at MINSU</p>
+                        <div class="team-social">
+                            <a href="#" class="social-link">📧</a>
+                            <a href="#" class="social-link">💼</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 fade-in-up">
+                    <div class="team-card">
+                        <div class="team-avatar">
+                            <div class="avatar-placeholder">👩‍💻</div>
+                        </div>
+                        <h3 class="team-name">Prof. Maria dela Cruz</h3>
+                        <p class="team-role">Systems Coordinator</p>
+                        <p class="team-bio">Ensuring seamless platform operations and user support excellence</p>
+                        <div class="team-social">
+                            <a href="#" class="social-link">📧</a>
+                            <a href="#" class="social-link">💼</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 fade-in-up">
+                    <div class="team-card">
+                        <div class="team-avatar">
+                            <div class="avatar-placeholder">👨‍🔧</div>
+                        </div>
+                        <h3 class="team-name">Engr. Carlos Reyes</h3>
+                        <p class="team-role">Equipment Manager</p>
+                        <p class="team-bio">Maintaining and managing all production equipment and facilities</p>
+                        <div class="team-social">
+                            <a href="#" class="social-link">📧</a>
+                            <a href="#" class="social-link">💼</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+   
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" id="scrollTop">↑</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/home.js"></script>
+</body>
+</html>

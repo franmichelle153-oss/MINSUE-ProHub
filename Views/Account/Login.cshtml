@@ -1,0 +1,68 @@
+﻿@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Mindoro State University</title>
+    <link rel="stylesheet" href="~/css/login.css?v=2" />
+</head>
+<body>
+    <div class="login-container">
+        <div class="left-panel">
+            <div class="logo-section">
+                <img src="~/images/logominsu.png" alt="Mindoro State University" class="logo" height="350px" width="350px" />
+                <h1>Welcome Back!</h1>
+                <p>Don't have an account?</p>
+                <a asp-controller="Account" asp-action="SignUp" class="btn-signup">Sign up</a>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="login-form">
+                <h2>Login</h2>
+
+                <form asp-action="Login" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="Email">Email:</label>
+                        <div class="input-wrapper">
+                            <input asp-for="Email" class="form-control" required autocomplete="off"/>
+                            <span class="input-icon">📧</span>
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Password">Password:</label>
+                        <div class="input-wrapper">
+                            <input asp-for="Password" class="form-control" required autocomplete="off"/>
+                            <span class="input-icon">🔒</span>
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="forgot-password">
+                        <a asp-action="ForgotPassword">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="btn-login">Login</button>
+                    
+                  
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+</body>
+</html>

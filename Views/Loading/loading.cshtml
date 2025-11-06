@@ -1,0 +1,33 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <link rel="stylesheet" href="~/css/loading.css">
+</head>
+<body style="background-image: url('@Url.Content("~/images/schoollogo.jpg")'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">
+    
+    <div class="loading-container">
+        <div class="logo-container">
+            
+            <img src="~/images/logominsu.png" alt="School Logo" class="logo-image"/>
+        </div>
+        <h1 class="loading-title">Loading...</h1>
+        <p class="loading-subtitle">Please wait while we prepare your experience</p>
+
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+    </div>
+    <script>
+        // Redirect to login page after 3 seconds
+        setTimeout(function() {
+            window.location.href = '/Account/Login';
+        }, 3000);
+    </script>
+</body>
+</html>

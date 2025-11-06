@@ -1,0 +1,335 @@
+﻿@{
+    ViewData["Title"] = "My Profile - MINSU E-ProHub";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/home.css" />
+    <link rel="stylesheet" href="~/css/profile.css?v=3" />
+    <link rel="icon" href="~/images/logominsu.png" type="image/png" />
+</head>
+<body>
+    <!-- Navigation Bar (Copied from Home Page) -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand d-flex align-items-center" href="@Url.Action("homepage", "User")">
+                <img src="~/images/logominsu.png" alt="MINSU Logo" class="navbar-logo">
+                <span class="brand-text">MINSU E-ProHub</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("homepage", "User")" data-page="homepage">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("About", "User")" data-page="about">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Product", "User")" data-page="product">Product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Contact", "User")" data-page="contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="@Url.Action("Profile", "User")" data-page="profile">Profile</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Header Section -->
+    <section class="profile-hero-section">
+        <div class="container">
+            <div class="profile-hero-content">
+                <div class="hero-badge fade-in">👤 My Account</div>
+                <h1 class="hero-title fade-in-delay-1">Profile Dashboard</h1>
+                <p class="hero-description fade-in-delay-2">
+                    Manage your personal information, view orders, and track reservations
+                </p>
+            </div>
+        </div>
+        <div class="decoration-circle circle-1"></div>
+        <div class="decoration-circle circle-2"></div>
+    </section>
+
+    <!-- Main Profile Content -->
+    <div class="profile-main-content">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Left Column - Profile Card -->
+                <div class="col-lg-4">
+                    <div class="profile-info-card">
+                        <div class="profile-avatar-wrapper">
+                            <img src="~/images/default-avatar.png" alt="Profile Picture" class="profile-avatar" id="profileImage">
+                            <div class="avatar-overlay">
+                                <button class="change-photo-btn" onclick="document.getElementById('photoUpload').click()">
+                                    📸 Change
+                                </button>
+                            </div>
+                        </div>
+                        <input type="file" id="photoUpload" style="display: none;" accept="image/*">
+
+                        <div class="profile-name-section">
+                            <h3 class="profile-name">Juan Dela Cruz</h3>
+                            <p class="profile-id">ID: 2021-12345</p>
+                            <span class="profile-badge">🎓 Active Student</span>
+                        </div>
+
+                        <div class="profile-quick-stats">
+                            <div class="stat-item">
+                                <div class="stat-icon">📦</div>
+                                <div class="stat-details">
+                                    <div class="stat-number">12</div>
+                                    <div class="stat-label">Total Orders</div>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon">📅</div>
+                                <div class="stat-details">
+                                    <div class="stat-number">3</div>
+                                    <div class="stat-label">Active Reservations</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="edit-profile-btn">
+                            ✏️ Edit Profile
+                        </button>
+                    </div>
+
+                    <!-- Account Actions Card -->
+                    <div class="actions-card">
+                        <h4 class="actions-title">Quick Actions</h4>
+                        <a href="@Url.Action("Product", "User")" class="action-link">
+                            <span class="action-icon">🛒</span>
+                            <span>Browse Products</span>
+                            <span class="action-arrow">→</span>
+                        </a>
+                        <a href="#" class="action-link danger">
+                            <span class="action-icon">🚪</span>
+                            <span>Logout</span>
+                            <span class="action-arrow">→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Column - Details and Orders -->
+                <div class="col-lg-8">
+                    <!-- Personal Information Card -->
+                    <div class="detail-card">
+                        <div class="card-header-custom">
+                            <h3 class="card-title">📋 Personal Information</h3>
+                            <button class="btn-edit-small">Edit</button>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-icon">👤</div>
+                                <div class="info-content">
+                                    <div class="info-label">Full Name</div>
+                                    <div class="info-value">Juan Dela Cruz</div>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">📧</div>
+                                <div class="info-content">
+                                    <div class="info-label">Email Address</div>
+                                    <div class="info-value">juan.delacruz@example.com</div>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">🎓</div>
+                                <div class="info-content">
+                                    <div class="info-label">Program/Course</div>
+                                    <div class="info-value">Bachelor of Science in Computer Science</div>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">📚</div>
+                                <div class="info-content">
+                                    <div class="info-label">Year Level</div>
+                                    <div class="info-value">3rd Year</div>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">📱</div>
+                                <div class="info-content">
+                                    <div class="info-label">Phone Number</div>
+                                    <div class="info-value">+63 912 345 6789</div>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">📍</div>
+                                <div class="info-content">
+                                    <div class="info-label">Address</div>
+                                    <div class="info-value">Main Campus, Oriental Mindoro</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Orders Card -->
+                    <div class="detail-card">
+                        <div class="card-header-custom">
+                            <h3 class="card-title">📦 Recent Orders</h3>
+                            <a href="#" class="btn-view-all">View All</a>
+                        </div>
+                        <div class="orders-list">
+                            <div class="order-card">
+                                <div class="order-card-header">
+                                    <div class="order-info-left">
+                                        <span class="order-number">Order #1234</span>
+                                        <span class="order-date">📅 Oct 25, 2025</span>
+                                    </div>
+                                    <span class="order-status-badge status-completed">✓ Completed</span>
+                                </div>
+                                <div class="order-card-body">
+                                    <div class="order-items-preview">
+                                        <span class="item-pill">PE Uniform (2x)</span>
+                                        <span class="item-pill">Student ID</span>
+                                    </div>
+                                    <div class="order-total">Total: <strong>₱1,200.00</strong></div>
+                                </div>
+                            </div>
+
+                            <div class="order-card">
+                                <div class="order-card-header">
+                                    <div class="order-info-left">
+                                        <span class="order-number">Order #1235</span>
+                                        <span class="order-date">📅 Oct 28, 2025</span>
+                                    </div>
+                                    <span class="order-status-badge status-processing">⏳ Processing</span>
+                                </div>
+                                <div class="order-card-body">
+                                    <div class="order-items-preview">
+                                        <span class="item-pill">School Uniform</span>
+                                        <span class="item-pill">Notebooks (3x)</span>
+                                    </div>
+                                    <div class="order-total">Total: <strong>₱2,450.00</strong></div>
+                                </div>
+                            </div>
+
+                            <div class="order-card">
+                                <div class="order-card-header">
+                                    <div class="order-info-left">
+                                        <span class="order-number">Order #1236</span>
+                                        <span class="order-date">📅 Nov 01, 2025</span>
+                                    </div>
+                                    <span class="order-status-badge status-pending">⏰ Pending</span>
+                                </div>
+                                <div class="order-card-body">
+                                    <div class="order-items-preview">
+                                        <span class="item-pill">ID Lace</span>
+                                        <span class="item-pill">Stationery</span>
+                                    </div>
+                                    <div class="order-total">Total: <strong>₱850.00</strong></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Active Reservations Card -->
+                    <div class="detail-card">
+                        <div class="card-header-custom">
+                            <h3 class="card-title">📅 Active Reservations</h3>
+                            <a href="@Url.Action("Product", "User")" class="btn-view-all">Make Reservation</a>
+                        </div>
+                        <div class="reservations-list">
+                            <div class="reservation-card">
+                                <div class="reservation-header">
+                                    <div class="reservation-icon">🎫</div>
+                                    <div class="reservation-info">
+                                        <h4 class="reservation-number">Reservation #R-001</h4>
+                                        <p class="reservation-date">Pickup: Nov 10, 2025</p>
+                                    </div>
+                                    <span class="reservation-status status-ready">✓ Ready</span>
+                                </div>
+                                <div class="reservation-body">
+                                    <p class="reservation-items">
+                                        <strong>Items:</strong> School Uniform (Size L), ID Lace
+                                    </p>
+                                    <div class="reservation-actions">
+                                        <button class="btn-reservation-action primary">View Details</button>
+                                        <button class="btn-reservation-action secondary">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="reservation-card">
+                                <div class="reservation-header">
+                                    <div class="reservation-icon">🎫</div>
+                                    <div class="reservation-info">
+                                        <h4 class="reservation-number">Reservation #R-002</h4>
+                                        <p class="reservation-date">Pickup: Nov 15, 2025</p>
+                                    </div>
+                                    <span class="reservation-status status-reserved">⏳ Reserved</span>
+                                </div>
+                                <div class="reservation-body">
+                                    <p class="reservation-items">
+                                        <strong>Items:</strong> PE Uniform Set (Size M)
+                                    </p>
+                                    <div class="reservation-actions">
+                                        <button class="btn-reservation-action primary">View Details</button>
+                                        <button class="btn-reservation-action secondary">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" id="scrollTop">↑</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/home.js"></script>
+    <script>
+        // Photo upload preview
+        document.getElementById('photoUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profileImage').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.detail-card, .profile-info-card, .actions-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
