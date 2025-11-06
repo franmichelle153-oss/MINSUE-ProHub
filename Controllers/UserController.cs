@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace MINSU_E_ProHub.Controllers
+namespace MINSUE_ProHub.Controllers
 {
     public class UserController : Controller
     {
