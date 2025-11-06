@@ -182,8 +182,15 @@ function initReservationButtons() {
 function reserveProduct(productName) {
     console.log(`%c Reserving: ${productName} `, 'background: #7cb342; color: white; font-size: 14px; padding: 8px 15px; border-radius: 5px;');
 
-    // Find the product item by data-name attribute
-    const productItem = document.querySelector(`.product-item[data-name="${productName}"]`);
+    // Find the product item by data-name attribute using a safe approach
+    const allProducts = document.querySelectorAll('.product-item');
+    let productItem = null;
+    for (const item of allProducts) {
+        if (item.getAttribute('data-name') === productName) {
+            productItem = item;
+            break;
+        }
+    }
     
     if (!productItem) {
         console.error(`Product not found: ${productName}`);
@@ -792,6 +799,7 @@ function createConfetti() {
     const duration = 3000;
     const animationEnd = Date.now() + duration;
     const particleTimeouts = [];
+    const colors = ['#7cb342', '#f4d03f', '#1a5f3f', '#ff6b6b', '#4ecdc4'];
 
     function randomInRange(min, max) {
         return Math.random() * (max - min) + min;
@@ -817,7 +825,7 @@ function createConfetti() {
                 position: fixed;
                 width: 10px;
                 height: 10px;
-                background-color: ${['#7cb342', '#f4d03f', '#1a5f3f', '#ff6b6b', '#4ecdc4'][Math.floor(Math.random() * 5)]};
+                background-color: ${colors[Math.floor(Math.random() * colors.length)]};
                 left: ${randomInRange(0, 100)}%;
                 top: -10px;
                 opacity: 1;
