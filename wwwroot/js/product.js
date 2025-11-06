@@ -210,9 +210,23 @@ function reserveProduct(productName) {
     showReservationModal(productName, productPrice, productCategory, productIcon);
 }
 
+// ==================== HTML ESCAPING ====================
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
 // ==================== RESERVATION MODAL (WITHOUT PAYMENT METHOD) ====================
 
 function showReservationModal(productName, productPrice, productCategory, productIcon) {
+    // Escape all inputs to prevent XSS
+    const safeName = escapeHtml(productName);
+    const safePrice = escapeHtml(productPrice);
+    const safeCategory = escapeHtml(productCategory);
+    const safeIcon = escapeHtml(productIcon);
+    
     // Create modal overlay
     const modalOverlay = document.createElement('div');
     modalOverlay.className = 'modal-overlay';
@@ -224,7 +238,7 @@ function showReservationModal(productName, productPrice, productCategory, produc
             <div class="modal-header">
                 <div class="modal-header-content">
                     <div class="modal-icon-wrapper">
-                        <span class="modal-product-icon">${productIcon}</span>
+                        <span class="modal-product-icon">${safeIcon}</span>
                     </div>
                     <div>
                         <h2 class="modal-title">Reserve Product</h2>
@@ -237,11 +251,11 @@ function showReservationModal(productName, productPrice, productCategory, produc
             <div class="modal-body">
                 <!-- Product Summary -->
                 <div class="product-summary">
-                    <div class="summary-icon">${productIcon}</div>
+                    <div class="summary-icon">${safeIcon}</div>
                     <div class="summary-details">
-                        <h3 class="summary-name">${productName}</h3>
-                        <p class="summary-category">${productCategory}</p>
-                        <div class="summary-price">${productPrice}</div>
+                        <h3 class="summary-name">${safeName}</h3>
+                        <p class="summary-category">${safeCategory}</p>
+                        <div class="summary-price">${safePrice}</div>
                     </div>
                 </div>
 
@@ -356,11 +370,11 @@ function showReservationModal(productName, productPrice, productCategory, produc
                     <div class="order-summary">
                         <div class="summary-row">
                             <span>Product:</span>
-                            <span>${productName}</span>
+                            <span>${safeName}</span>
                         </div>
                         <div class="summary-row">
                             <span>Unit Price:</span>
-                            <span>${productPrice}</span>
+                            <span>${safePrice}</span>
                         </div>
                         <div class="summary-row">
                             <span>Quantity:</span>
@@ -368,7 +382,7 @@ function showReservationModal(productName, productPrice, productCategory, produc
                         </div>
                         <div class="summary-row total-row">
                             <span>Total Amount:</span>
-                            <span id="summaryTotal">${productPrice}</span>
+                            <span id="summaryTotal">${safePrice}</span>
                         </div>
                     </div>
 
