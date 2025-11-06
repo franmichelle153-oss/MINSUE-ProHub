@@ -169,10 +169,32 @@ function initProductAnimations() {
     });
 }
 
+// ==================== RESERVATION BUTTONS ====================
+
+function initReservationButtons() {
+    // This function can be used to add additional event listeners or initialization
+    // Currently, the onclick handlers in the HTML are sufficient
+    console.log('Reservation buttons initialized');
+}
+
 // ==================== RESERVE PRODUCT ====================
 
-function reserveProduct(productName, productPrice, productCategory, productIcon) {
+function reserveProduct(productName) {
     console.log(`%c Reserving: ${productName} `, 'background: #7cb342; color: white; font-size: 14px; padding: 8px 15px; border-radius: 5px;');
+
+    // Find the product item by data-name attribute
+    const productItem = document.querySelector(`.product-item[data-name="${productName}"]`);
+    
+    if (!productItem) {
+        console.error(`Product not found: ${productName}`);
+        showNotification('Product not found', 'error');
+        return;
+    }
+
+    // Extract product details from the DOM
+    const productPrice = productItem.querySelector('.product-price').textContent;
+    const productCategory = productItem.querySelector('.product-category').textContent;
+    const productIcon = productItem.querySelector('.product-icon').textContent;
 
     // Show reservation modal
     showReservationModal(productName, productPrice, productCategory, productIcon);
@@ -738,23 +760,60 @@ setTimeout(updateFilterCounts, 100);
 
 console.log('%c 📦 Products Loaded Successfully! ', 'background: #f4d03f; color: #134d30; font-size: 14px; padding: 8px 15px; border-radius: 5px;');
 console.log('%c 🎯 Use filters to browse categories ', 'color: #1a5f3f; font-size: 12px; padding: 5px;');
-console.log('%c 🔍 Search for specific products ', 'color: #7cb342; font-size: 12px; padding: 5px;');@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
-@{
-    var token = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+console.log('%c 🔍 Search for specific products ', 'color: #7cb342; font-size: 12px; padding: 5px;');
+
+// ==================== CONFETTI ANIMATION ====================
+
+function createConfetti() {
+    const duration = 3000;
+    const animationEnd = Date.now() + duration;
+    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 10000 };
+
+    function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    const interval = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+            return clearInterval(interval);
+        }
+
+        const particleCount = 50 * (timeLeft / duration);
+
+        // Create confetti particles
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'confetti-particle';
+            particle.style.cssText = `
+                position: fixed;
+                width: 10px;
+                height: 10px;
+                background-color: ${['#7cb342', '#f4d03f', '#1a5f3f', '#ff6b6b', '#4ecdc4'][Math.floor(Math.random() * 5)]};
+                left: ${randomInRange(0, 100)}%;
+                top: -10px;
+                opacity: 1;
+                z-index: 10000;
+                animation: confetti-fall ${randomInRange(2, 4)}s linear forwards;
+            `;
+            document.body.appendChild(particle);
+            setTimeout(() => particle.remove(), 4000);
+        }
+    }, 250);
+
+    // Add confetti animation CSS if not already present
+    if (!document.getElementById('confetti-style')) {
+        const style = document.createElement('style');
+        style.id = 'confetti-style';
+        style.textContent = `
+            @keyframes confetti-fall {
+                to {
+                    transform: translateY(100vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
 }
-
-<input type="hidden" name="__RequestVerificationToken" value="@token" />
-// Add authentication
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options => {
-        options.LoginPath = "/Account/Login";
-        options.LogoutPath = "/Account/Logout";
-    });
-
-// Add services
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<ReservationLogicDb>();
-
-// In the middleware section, add:
-app.UseAuthentication();
-app.UseAuthorization();
