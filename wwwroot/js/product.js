@@ -169,18 +169,71 @@ function initProductAnimations() {
     });
 }
 
+// ==================== RESERVATION BUTTONS ====================
+
+function initReservationButtons() {
+    // This function can be used to add additional event listeners or initialization
+    // Currently, the onclick handlers in the HTML are sufficient
+    console.log('Reservation buttons initialized');
+}
+
 // ==================== RESERVE PRODUCT ====================
 
-function reserveProduct(productName, productPrice, productCategory, productIcon) {
+function reserveProduct(productName) {
     console.log(`%c Reserving: ${productName} `, 'background: #7cb342; color: white; font-size: 14px; padding: 8px 15px; border-radius: 5px;');
+
+    // Find the product item by data-name attribute using a safe approach
+    const allProducts = document.querySelectorAll('.product-item');
+    let productItem = null;
+    for (const item of allProducts) {
+        if (item.getAttribute('data-name') === productName) {
+            productItem = item;
+            break;
+        }
+    }
+    
+    if (!productItem) {
+        console.error(`Product not found: ${productName}`);
+        showNotification('Product not found', 'error');
+        return;
+    }
+
+    // Extract product details from the DOM with null checks
+    const priceElement = productItem.querySelector('.product-price');
+    const categoryElement = productItem.querySelector('.product-category');
+    const iconElement = productItem.querySelector('.product-icon');
+    
+    if (!priceElement || !categoryElement || !iconElement) {
+        console.error(`Missing product details for: ${productName}`);
+        showNotification('Product information incomplete', 'error');
+        return;
+    }
+    
+    const productPrice = priceElement.textContent;
+    const productCategory = categoryElement.textContent;
+    const productIcon = iconElement.textContent;
 
     // Show reservation modal
     showReservationModal(productName, productPrice, productCategory, productIcon);
 }
 
+// ==================== HTML ESCAPING ====================
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
 // ==================== RESERVATION MODAL (WITHOUT PAYMENT METHOD) ====================
 
 function showReservationModal(productName, productPrice, productCategory, productIcon) {
+    // Escape all inputs to prevent XSS
+    const safeName = escapeHtml(productName);
+    const safePrice = escapeHtml(productPrice);
+    const safeCategory = escapeHtml(productCategory);
+    const safeIcon = escapeHtml(productIcon);
+    
     // Create modal overlay
     const modalOverlay = document.createElement('div');
     modalOverlay.className = 'modal-overlay';
@@ -192,7 +245,7 @@ function showReservationModal(productName, productPrice, productCategory, produc
             <div class="modal-header">
                 <div class="modal-header-content">
                     <div class="modal-icon-wrapper">
-                        <span class="modal-product-icon">${productIcon}</span>
+                        <span class="modal-product-icon">${safeIcon}</span>
                     </div>
                     <div>
                         <h2 class="modal-title">Reserve Product</h2>
@@ -205,11 +258,11 @@ function showReservationModal(productName, productPrice, productCategory, produc
             <div class="modal-body">
                 <!-- Product Summary -->
                 <div class="product-summary">
-                    <div class="summary-icon">${productIcon}</div>
+                    <div class="summary-icon">${safeIcon}</div>
                     <div class="summary-details">
-                        <h3 class="summary-name">${productName}</h3>
-                        <p class="summary-category">${productCategory}</p>
-                        <div class="summary-price">${productPrice}</div>
+                        <h3 class="summary-name">${safeName}</h3>
+                        <p class="summary-category">${safeCategory}</p>
+                        <div class="summary-price">${safePrice}</div>
                     </div>
                 </div>
 
@@ -324,11 +377,11 @@ function showReservationModal(productName, productPrice, productCategory, produc
                     <div class="order-summary">
                         <div class="summary-row">
                             <span>Product:</span>
-                            <span>${productName}</span>
+                            <span>${safeName}</span>
                         </div>
                         <div class="summary-row">
                             <span>Unit Price:</span>
-                            <span>${productPrice}</span>
+                            <span>${safePrice}</span>
                         </div>
                         <div class="summary-row">
                             <span>Quantity:</span>
@@ -336,7 +389,7 @@ function showReservationModal(productName, productPrice, productCategory, produc
                         </div>
                         <div class="summary-row total-row">
                             <span>Total Amount:</span>
-                            <span id="summaryTotal">${productPrice}</span>
+                            <span id="summaryTotal">${safePrice}</span>
                         </div>
                     </div>
 
@@ -738,23 +791,65 @@ setTimeout(updateFilterCounts, 100);
 
 console.log('%c 📦 Products Loaded Successfully! ', 'background: #f4d03f; color: #134d30; font-size: 14px; padding: 8px 15px; border-radius: 5px;');
 console.log('%c 🎯 Use filters to browse categories ', 'color: #1a5f3f; font-size: 12px; padding: 5px;');
-console.log('%c 🔍 Search for specific products ', 'color: #7cb342; font-size: 12px; padding: 5px;');@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
-@{
-    var token = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+console.log('%c 🔍 Search for specific products ', 'color: #7cb342; font-size: 12px; padding: 5px;');
+
+// ==================== CONFETTI ANIMATION ====================
+
+function createConfetti() {
+    const duration = 3000;
+    const animationEnd = Date.now() + duration;
+    const particleTimeouts = [];
+    const colors = ['#7cb342', '#f4d03f', '#1a5f3f', '#ff6b6b', '#4ecdc4'];
+
+    function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    const interval = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+            clearInterval(interval);
+            // Clear any remaining timeouts
+            particleTimeouts.forEach(timeout => clearTimeout(timeout));
+            return;
+        }
+
+        const particleCount = 50 * (timeLeft / duration);
+
+        // Create confetti particles
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'confetti-particle';
+            particle.style.cssText = `
+                position: fixed;
+                width: 10px;
+                height: 10px;
+                background-color: ${colors[Math.floor(Math.random() * colors.length)]};
+                left: ${randomInRange(0, 100)}%;
+                top: -10px;
+                opacity: 1;
+                z-index: 10000;
+                animation: confetti-fall ${randomInRange(2, 4)}s linear forwards;
+            `;
+            document.body.appendChild(particle);
+            const timeout = setTimeout(() => particle.remove(), 4000);
+            particleTimeouts.push(timeout);
+        }
+    }, 250);
+
+    // Add confetti animation CSS if not already present
+    if (!document.getElementById('confetti-style')) {
+        const style = document.createElement('style');
+        style.id = 'confetti-style';
+        style.textContent = `
+            @keyframes confetti-fall {
+                to {
+                    transform: translateY(100vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
 }
-
-<input type="hidden" name="__RequestVerificationToken" value="@token" />
-// Add authentication
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options => {
-        options.LoginPath = "/Account/Login";
-        options.LogoutPath = "/Account/Logout";
-    });
-
-// Add services
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<ReservationLogicDb>();
-
-// In the middleware section, add:
-app.UseAuthentication();
-app.UseAuthorization();
