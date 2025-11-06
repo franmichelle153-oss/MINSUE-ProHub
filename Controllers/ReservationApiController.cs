@@ -26,8 +26,12 @@ namespace MINSUE_ProHub.Controllers
 
             try
             {
-                var reservationId = await _reservationLogic.CreateReservation(model);
-                return Ok(new { reservationId = reservationId });
+                var success = await _reservationLogic.CreateReservation(model);
+                if (success)
+                {
+                    return Ok(new { message = "Reservation created successfully" });
+                }
+                return BadRequest(new { message = "Failed to create reservation" });
             }
             catch (Exception ex)
             {
