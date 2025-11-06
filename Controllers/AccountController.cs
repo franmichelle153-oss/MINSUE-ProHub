@@ -10,16 +10,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using MINSUE_ProHub.Models;
+using MINSUE_ProHub.Services;
 
 namespace MINSUE_ProHub.Controllers
 {
     public class AccountController : Controller
     {
         private readonly IConfiguration Configuration;
+        private readonly EmailService _emailService;
 
-        public AccountController(IConfiguration configuration)
+        public AccountController(IConfiguration configuration, EmailService emailService)
         {
             Configuration = configuration;
+            _emailService = emailService;
         }
 
         [HttpGet]
@@ -144,15 +147,60 @@ namespace MINSUE_ProHub.Controllers
                     }
                 }
 
-                string query = "INSERT INTO Users (Username, StudentEmployeeId, Email, Password) VALUES (@Username, @StudentEmployeeId, @Email, @Password)";
+                // Generate verification token
+                var token = Guid.NewGuid().ToString("N");
+
+                string query = "INSERT INTO Users (Username, StudentEmployeeId, Email, Password, VerificationToken, IsVerified) VALUES (@Username, @StudentEmployeeId, @Email, @Password, @VerificationToken,0)";
                 using (var cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@Username", model.Username ?? string.Empty);
                     cmd.Parameters.AddWithValue("@StudentEmployeeId", model.StudentEmployeeId ?? string.Empty);
                     cmd.Parameters.AddWithValue("@Email", model.Email ?? string.Empty);
                     cmd.Parameters.AddWithValue("@Password", HashPassword(model.Password ?? string.Empty));
+                    cmd.Parameters.AddWithValue("@VerificationToken", token);
 
                     await cmd.ExecuteNonQueryAsync();
+                }
+
+                // Send verification email
+                var verifyUrl = Url.Action("VerifyEmail", "Account", new { token }, Request.Scheme);
+                var subject = "Verify your MINSUE ProHub account";
+                var html = $"<p>Hi {model.Username},</p><p>Please verify your email by clicking <a href=\"{verifyUrl}\">here</a>.</p>";
+                try
+                {
+                    await _emailService.SendVerificationEmailAsync(model.Email, subject, html);
+                }
+                catch (Exception ex)
+                {
+                    // Log error if you have a logger - omitted here for brevity
+                }
+            }
+
+            // Redirect to a page telling user to check their email
+            return RedirectToAction("Login", "Account");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> VerifyEmail(string token)
+        {
+            if (string.IsNullOrEmpty(token))
+            {
+                return BadRequest("Invalid verification token.");
+            }
+
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            using (var con = new SqlConnection(connectionString))
+            {
+                await con.OpenAsync();
+                string query = "UPDATE Users SET IsVerified =1, VerificationToken = NULL WHERE VerificationToken = @Token";
+                using (var cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@Token", token);
+                    int rows = await cmd.ExecuteNonQueryAsync();
+                    if (rows == 0)
+                    {
+                        return NotFound("Invalid or expired token.");
+                    }
                 }
             }
 
