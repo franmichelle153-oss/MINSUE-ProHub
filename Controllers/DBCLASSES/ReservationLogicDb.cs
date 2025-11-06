@@ -191,15 +191,14 @@ namespace MINSUE_ProHub.Controllers.DBCLASSES
                         throw new UnauthorizedAccessException("User must be logged in to make a reservation");
                     }
 
-                    command.Parameters.AddWithValue("@Email", reservation.Email);
                     command.Parameters.AddWithValue("@StudentName", reservation.StudentName);
                     command.Parameters.AddWithValue("@StudentId", reservation.StudentId);
+                    command.Parameters.AddWithValue("@Email", reservation.Email);
                     command.Parameters.AddWithValue("@YearLevel", reservation.YearLevel);
                     command.Parameters.AddWithValue("@ProductId", reservation.ProductId);
-                    command.Parameters.AddWithValue("@Quantity", reservation.QuantityOrder);
-                    command.Parameters.AddWithValue("@PickupDate", reservation.DateToClaim);
-                    command.Parameters.AddWithValue("@Status", "Pending");
-                    command.Parameters.AddWithValue("@CreatedDate", DateTime.UtcNow);
+                    command.Parameters.AddWithValue("@QuantityOrder", reservation.QuantityOrder);
+                    command.Parameters.AddWithValue("@DateToClaim", reservation.DateToClaim);
+                    command.Parameters.AddWithValue("@UserId", userEmail);
 
                     try
                     {
