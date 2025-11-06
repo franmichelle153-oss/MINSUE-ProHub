@@ -11,25 +11,29 @@ namespace MINSUE_ProHub.Controllers
         private readonly ReservationLogicDb _reservationLogic;
 
         public ReservationApiController(ReservationLogicDb reservationLogic)
-{
-      _reservationLogic = reservationLogic;
+        {
+            _reservationLogic = reservationLogic;
         }
 
         [HttpPost("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([FromBody] ReservationModel model)
-      {
-     if (!ModelState.IsValid)
+        {
+            if (!ModelState.IsValid)
             {
-         return BadRequest(ModelState);
-      }
+                return BadRequest(ModelState);
+            }
 
             try
             {
- var reservationId = await _reservationLogic.CreateReservation(model);
-     return Ok(new { reservationId = reservationId });
-    }
-   catch (Exception ex)
+                var success = await _reservationLogic.CreateReservation(model);
+                if (success)
+                {
+                    return Ok(new { message = "Reservation created successfully" });
+                }
+                return BadRequest(new { message = "Failed to create reservation" });
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, new { message = ex.Message });
             }

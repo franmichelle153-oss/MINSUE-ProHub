@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace YourProjectName.Controllers
+namespace MINSUE_ProHub.Controllers
 {
     public class LoadingController : Controller
     {
