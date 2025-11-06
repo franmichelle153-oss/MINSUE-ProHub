@@ -191,10 +191,20 @@ function reserveProduct(productName) {
         return;
     }
 
-    // Extract product details from the DOM
-    const productPrice = productItem.querySelector('.product-price').textContent;
-    const productCategory = productItem.querySelector('.product-category').textContent;
-    const productIcon = productItem.querySelector('.product-icon').textContent;
+    // Extract product details from the DOM with null checks
+    const priceElement = productItem.querySelector('.product-price');
+    const categoryElement = productItem.querySelector('.product-category');
+    const iconElement = productItem.querySelector('.product-icon');
+    
+    if (!priceElement || !categoryElement || !iconElement) {
+        console.error(`Missing product details for: ${productName}`);
+        showNotification('Product information incomplete', 'error');
+        return;
+    }
+    
+    const productPrice = priceElement.textContent;
+    const productCategory = categoryElement.textContent;
+    const productIcon = iconElement.textContent;
 
     // Show reservation modal
     showReservationModal(productName, productPrice, productCategory, productIcon);
@@ -767,7 +777,7 @@ console.log('%c 🔍 Search for specific products ', 'color: #7cb342; font-size:
 function createConfetti() {
     const duration = 3000;
     const animationEnd = Date.now() + duration;
-    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 10000 };
+    const particleTimeouts = [];
 
     function randomInRange(min, max) {
         return Math.random() * (max - min) + min;
@@ -777,7 +787,10 @@ function createConfetti() {
         const timeLeft = animationEnd - Date.now();
 
         if (timeLeft <= 0) {
-            return clearInterval(interval);
+            clearInterval(interval);
+            // Clear any remaining timeouts
+            particleTimeouts.forEach(timeout => clearTimeout(timeout));
+            return;
         }
 
         const particleCount = 50 * (timeLeft / duration);
@@ -798,7 +811,8 @@ function createConfetti() {
                 animation: confetti-fall ${randomInRange(2, 4)}s linear forwards;
             `;
             document.body.appendChild(particle);
-            setTimeout(() => particle.remove(), 4000);
+            const timeout = setTimeout(() => particle.remove(), 4000);
+            particleTimeouts.push(timeout);
         }
     }, 250);
 
